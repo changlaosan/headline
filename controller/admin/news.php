@@ -1,25 +1,62 @@
 <?php
 include '../core/db.php';
 
+
 class news extends db
 {
-  public function index()
-  {
-    echo 'news';
-  }
+    const PER_PAGE = 6;
+    public function activedelete()
+    {
+//        sleep(1);
+        $stmt = $this->pdo->exec("delete from news where id = " . $_GET['id']);
+        echo $stmt;
+    }
+    public function activeupdate()
+    {
+//        sleep(1);
+        $stmt = $this->pdo->prepare('update news set '.$_GET['k'].' = ? where id = ?');
+        $stmt->bindValue(1, $_GET['v']);
+        $stmt->bindValue(2, $_GET['id']);
+        echo $stmt->execute();
+    }
+    public function activeinsert()
+    {
+//        sleep(1);
+        $stmt = $this->pdo->prepare("insert into news(cid,title,image) values (?,?,?)");
+        $stmt->bindValue(1,' ');
+        $stmt->bindValue(2, ' ');
+        $stmt->bindValue(3, ' ');
+        echo $stmt->execute();
+    }
+    public function activeindex()
+    {
+        //接收页数
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+        } else {
+            $page = 1;
+        }
+        //分类
+        $category = $this->pdo
+            ->query('select * from news_category where is_default = "1" ')
+            ->fetchAll();
 
-  public function lists()
-  {
+        //某个分类下的总条数
+        $num = $this->pdo
+            ->query('select count(*) as total from news')
+            ->fetch()['total'];
 
-  }
+        //总页数
+        $page_total = ceil($num / $this::PER_PAGE);
 
-  public function add()
-  {
 
-  }
-
-  public function remove()
-  {
-
-  }
+        $stmt = $this->pdo->query('select * from news limit '.$this::PER_PAGE.' offset '.($page-1)*$this::PER_PAGE);
+        $rows = $stmt->fetchAll();
+        include '../views/admin/index-head.html';
+        include '../views/admin/new.html';
+    }
 }
+
+
+//$o = new page();
+//$o->activeindex();
