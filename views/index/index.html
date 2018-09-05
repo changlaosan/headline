@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/assets/public/jquery.twbsPagination.min.js"></script>
+  <script src="/assets/public/rem.js"></script>
+  <link rel="stylesheet" href="/assets/public/all.css">
+  <link rel="stylesheet" href="/assets/index/css/index.css">
+  <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="head">
+  <div class="head-left">
+    <span id="interest">&#xe640;</span>
+  </div>
+  <div class="head-title">
+    <img src="/assets/public/img/title.png" alt="">
+    <span>&#xe782;</span>
+  </div>
+  <a href="/index.php?c=page&m=search">
+    <img src="/assets/public/img/search.png" alt="" class="head-search">
+  </a>
+</div>
+
+<div class="nav">
+  <div class="nav-left">
+    <?php foreach ($category as $k => $v) { ?>
+    <li class='<?php echo $v['id'] == $cid?'active':'' ?>'>
+      <a href='/index.php?c=page&m=index&cid=<?php echo $v['id'] ?>&page=1'><?php echo $v['name'] ?></a>
+    </li>
+    <?php } ?>
+  </div>
+  <div class="nav-right">
+    <a href="/index.php?c=page&m=category">&#xe63b;</a>
+  </div>
+</div>
+<div class="recommend">
+  <span>为你推荐了8篇文章</span>
+</div>
+
+<div class="content">
+  <!--<section class="item">-->
+    <!--<a href="#" class="map3">-->
+      <!--<div class="item-text">-->
+        <!--朋友圈“三天可见”你怎么看？专家说自我封闭倾向很严重，网友评论却炸了-->
+      <!--</div>-->
+      <!--<div class="item-img">-->
+        <!--<ul>-->
+          <!--<li class="item-img-holder">-->
+            <!--<img src="/assets/public/img/1.jpg" alt="">-->
+          <!--</li>-->
+          <!--<li class="item-img-holder active">-->
+            <!--<img src="/assets/public/img/2.jpg" alt="">-->
+          <!--</li>-->
+          <!--<li class="item-img-holder">-->
+            <!--<img src="/assets/public/img/3.jpg" alt="">-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+      <!--<div class="item-info">-->
+        <!--<span class="info-address">深圳卫视</span>-->
+        <!--<span>评论</span>-->
+        <!--<span class="info-num">133</span>-->
+        <!--<span class="info-time">35分钟前</span>-->
+      <!--</div>-->
+    <!--</a>-->
+  <!--</section>-->
+  <?php foreach($news as $k => $v) {?>
+  <section class="item">
+    <a href="<?php echo $v['url'] ?>" class="map1">
+      <div class="item-left">
+        <div class="item-text">
+          <?php echo $v['title'] ?>
+        </div>
+        <div class="item-info">
+          <span class="info-address">深圳卫视</span>
+          <span>评论</span>
+          <span class="info-num"><?php echo $v['view'] ?></span>
+          <span class="info-time"><?php echo $v['create_time'] ?></span>
+        </div>
+      </div>
+      <div class="item-right">
+        <img src="<?php echo $v['image'] ?>" alt="">
+      </div>
+    </a>
+  </section>
+  <?php } ?>
+</div>
+
+<div class="windows"></div>
+<div class="popup">
+  <img src="/assets/public/img/banner.png" alt="">
+  <p>已加载好您感兴趣的头条</p>
+  <div class="popup-open">
+    <span>立即打开</span>
+  </div>
+  <div class="popup-close">X</div>
+</div>
+
+
+<div class="loading">加载更多</div>
+<ul id="pagination-demo" class="pagination-sm"></ul>
+
+
+<script>
+
+  //     $('#pagination-demo').twbsPagination({
+  //         totalPages: <?php echo $page_total?>,
+  //     visiblePages: 3,
+  //         startPage:<?php echo $page?>,
+  //     onPageClick: function (event, page) {
+  //         console.log(page);
+  //         if(page != <?php echo $page?>){
+  //             location.href="/index.php?c=page&m=index&cid=<?php echo $cid?>&page="+page;
+  //         }
+  //     }
+  // });
+
+        $('.loading').on('click',function () {
+
+            $.ajax({
+                url: '/index.php',
+                data: {
+                    c: 'page',
+                    m:'index',
+                    page: 2,
+                },
+                success: function () {
+                    location.href="http://www.abc.com/index.php?c=page&m=index&cid=1&page=2";
+                }
+            })
+        })
+
+</script>
+</body>
+</html>
+<script src="/assets/index/js/index.js"></script>

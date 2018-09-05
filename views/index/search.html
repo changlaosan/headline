@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="/assets/public/all.css">
+  <link rel="stylesheet" href="/assets/index/css/search.css">
+  <script src="/assets/public/rem.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="head">
+  <a href="/index.php?c=page&m=index" class="backBtn">
+    <img src="/assets/public/img/back.png" alt="">
+  </a>
+  <span>频道管理</span>
+</div>
+
+<div class="search">
+  <div class="search-left">
+    <img src="/assets/public/img/logo.png" alt="" class="logo">
+    <span>&#xe600;</span>
+  </div>
+  <input type="text" placeholder="请输入搜索关键字">
+</div>
+
+<div class="content">
+  <ul>
+    <li><a href="">火箭签约安东尼</a></li>
+    <li><a href="">山东暴雨预警</a></li>
+    <li><a href="">黄晓明 股票操纵</a></li>
+    <li><a href="">韩学臣被判无期</a></li>
+    <li><a href="">茅台致歉</a></li>
+    <li><a href="">阅文收购新丽传媒</a></li>
+    <li><a href="">哈登对女子动粗</a></li>
+    <li><a href="">南京楼市调控新政</a></li>
+    <li><a href="">怪物猎人世界下架</a></li>
+    <li><a href="">江西彭小峰被批捕</a></li>
+  </ul>
+</div>
+
+
+
+
+
+  <ul id="ul">
+    <?php foreach($results as $k => $v){ ?>
+    <li><?php echo $v['title']?></li>
+    <?php } ?>
+  </ul>
+  <button id="loadmore">加载更多</button>
+<script>
+  var page = 1;
+  $(function () {
+     $('#loadmore').click(function(){
+       $.ajax({
+         url:'/index.php?c=page&m=searchList&s=<?php echo $keyword?>',
+         data:{
+           page: page + 1
+         },
+         success:function(data){
+           page = page + 1;
+           data = JSON.parse(data);
+           if(data.length){
+             data.forEach(v=>{
+               $(`<li>${v.title}</li>`)
+                 .appendTo('#ul');
+             })
+           }else{
+             alert('没有更多')
+           }
+         }
+       })
+     })
+  })
+</script>
+</body>
+</html>

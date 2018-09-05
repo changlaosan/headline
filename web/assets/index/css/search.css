@@ -1,0 +1,107 @@
+@font-face {
+  font-family: 'iconfont';  /* project id 791165 */
+  src: url('https://at.alicdn.com/t/font_791165_jy8wt378fn.eot');
+  src: url('https://at.alicdn.com/t/font_791165_jy8wt378fn.eot?#iefix') format('embedded-opentype'),
+  url('https://at.alicdn.com/t/font_791165_jy8wt378fn.woff') format('woff'),
+  url('https://at.alicdn.com/t/font_791165_jy8wt378fn.ttf') format('truetype'),
+  url('https://at.alicdn.com/t/font_791165_jy8wt378fn.svg#iconfont') format('svg');
+}
+.head{
+	width: 100%;
+	height: 0.88rem;
+	background-color: #D43D3D;
+}
+.head span{
+	display: block;
+	color: #fff;
+	font-size: 0.36rem;
+	font-weight: 800;
+	text-align: center;
+	line-height: 0.88rem;
+}
+.backBtn{
+	width: 0.88rem;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+.backBtn img{
+	width: 0.44rem;
+	height: 0.5rem;
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+.search{
+	width: 100%;
+	height: 0.76rem;
+	border: 0.1rem solid #C9C9C9;
+}
+.search-left{
+	width: 0.8rem;
+	height: 0.56rem;
+	float: left;
+	overflow: hidden;
+}
+.logo{
+	width: 0.4rem;
+	height: auto;
+	position: absolute;
+	left: 0.1rem;
+	top: -0.7rem;
+}
+.search-left span{
+	font-family: 'iconfont';
+	font-size: 0.24rem;
+	color: #D5D5D5;
+	position: absolute;
+	top: 0.2rem;
+	right: 0.05rem;
+	transition: all 0 ease;
+	transform: scale(0.6); 
+}
+.search input{
+	width: 6.5rem;
+	height: 0.56rem;
+	float: left;
+	border: 0;
+	padding: 0.1rem 0.2rem 0.1rem 0;
+	outline: none;
+	color: #ccc;
+	font-size: 0.32rem;
+	line-height: 0.56rem;
+}
+.search input::-webkit-input-placeholder{
+	color: #ccc;
+	font-size: 0.32rem;
+	line-height: 0.56rem;
+}
+.content{
+
+}
+.content ul{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.content li{
+    display: inline-block;
+    margin: 0.3rem 0.1rem 0;
+}
+.content a{
+	padding: 0.1rem;
+	font-size: 0.3rem;
+	color: #333;
+	text-align: center;
+	line-height: 0.4rem;
+	height: 0.6rem;
+	width: auto;
+	display: block;
+	background-color: #f5f5f5;
+}
