@@ -28,45 +28,46 @@
 </div>
 
 <div class="content">
-  <ul>
-    <li><a href="">火箭签约安东尼</a></li>
-    <li><a href="">山东暴雨预警</a></li>
-    <li><a href="">黄晓明 股票操纵</a></li>
-    <li><a href="">韩学臣被判无期</a></li>
-    <li><a href="">茅台致歉</a></li>
-    <li><a href="">阅文收购新丽传媒</a></li>
-    <li><a href="">哈登对女子动粗</a></li>
-    <li><a href="">南京楼市调控新政</a></li>
-    <li><a href="">怪物猎人世界下架</a></li>
-    <li><a href="">江西彭小峰被批捕</a></li>
+  <ul id="ul">
+    <!--<li><a href="">火箭签约安东尼</a></li>-->
+    <!--<li><a href="">山东暴雨预警</a></li>-->
+    <!--<li><a href="">黄晓明 股票操纵</a></li>-->
+    <!--<li><a href="">韩学臣被判无期</a></li>-->
+    <!--<li><a href="">茅台致歉</a></li>-->
+    <!--<li><a href="">阅文收购新丽传媒</a></li>-->
+    <!--<li><a href="">哈登对女子动粗</a></li>-->
+    <!--<li><a href="">南京楼市调控新政</a></li>-->
+    <!--<li><a href="">怪物猎人世界下架</a></li>-->
+    <!--<li><a href="">江西彭小峰被批捕</a></li>-->
+
+
+    <!--<?php foreach ($results as $k => $v) { ?>-->
+    <!--<li>-->
+      <!--<a href='<?php echo $v['url'] ?>'><?php echo $v['title'] ?></a>-->
+    <!--</li>-->
+    <!--<?php } ?>-->
+
   </ul>
 </div>
+<button id="loadmore">加载更多</button>
 
-
-
-
-
-  <ul id="ul">
-    <?php foreach($results as $k => $v){ ?>
-    <li><?php echo $v['title']?></li>
-    <?php } ?>
-  </ul>
-  <button id="loadmore">加载更多</button>
 <script>
+  console.log( $('input').val() )
   var page = 1;
   $(function () {
      $('#loadmore').click(function(){
        $.ajax({
-         url:'/index.php?c=page&m=searchList&s=<?php echo $keyword?>',
+         url:'/index.php?c=page&m=searchList',
          data:{
-           page: page + 1
+           page: page,
+           s : $('input').val()
          },
          success:function(data){
            page = page + 1;
            data = JSON.parse(data);
            if(data.length){
              data.forEach(v=>{
-               $(`<li>${v.title}</li>`)
+               $(`<li><a href='${v.url}'>${v.title}</a></li>`)
                  .appendTo('#ul');
              })
            }else{

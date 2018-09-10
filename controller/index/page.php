@@ -34,17 +34,38 @@ class page extends db
 
 //新闻
     $news = $this->pdo
-      ->query(
-        'select * from news where cid= ' . $cid . ' limit '.$this::PER_PAGE * $page
-      )
+      ->query('select * from news where cid= ' . $cid . ' limit '.$this::PER_PAGE )
       ->fetchAll();
-
+//导航栏滚动距离
+      if (isset($_GET['scrollLeft'])) {
+          $scrollLeft = $_GET['scrollLeft'];
+      } else {
+          $scrollLeft = 0;
+      }
     include '../views/index/index.html';
+  }
+
+// 首页ajax
+  public function indexlist(){
+      if (isset($_GET['cid'])) {
+          $cid = $_GET['cid'];
+      } else {
+          $cid = 1;
+      }
+      if (isset($_GET['page'])) {
+          $page = $_GET['page'];
+      } else {
+          $page = 1;
+      }
+      $news = $this->pdo
+          ->query('select * from news where cid= ' . $cid . ' limit '.$this::PER_PAGE .' offset '. ($page-1)*$this::PER_PAGE)
+          ->fetchAll();
+      echo json_encode($news);
   }
 //  分类页面
   public function category()
   {
-    // 改变量is_default   UPDATE `wui1805`.`news_category` SET `is_default` = '1' WHERE `news_category`.`id` = 6;
+    // 改变量is_default
       if(isset($_GET['s'])){
           $stmt = $this -> pdo->prepare("UPDATE news_category SET is_default = ? WHERE id = ?");
           $stmt->bindValue(1,$_GET['s']);

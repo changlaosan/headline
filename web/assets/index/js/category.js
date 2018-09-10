@@ -1,5 +1,6 @@
 $(function() {
-    $('.del').on('click', '.li', function () {
+    let del = $('.del li').not( $('.del li').eq(0) );
+    del.on('click', function () {
         var id = $(this).attr("data-id");
         console.log($(this));
         var val = $(this).context.innerText;

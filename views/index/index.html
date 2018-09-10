@@ -27,11 +27,13 @@
   </a>
 </div>
 
+<!--href='/index.php?c=page&m=index&cid=<?php echo $v['id'] ?>&page=1'-->
+
 <div class="nav">
   <div class="nav-left">
     <?php foreach ($category as $k => $v) { ?>
-    <li class='<?php echo $v['id'] == $cid?'active':'' ?>'>
-      <a href='/index.php?c=page&m=index&cid=<?php echo $v['id'] ?>&page=1'><?php echo $v['name'] ?></a>
+    <li data-cid='<?php echo $v['id'] ?>' class='<?php echo $v['id'] == $cid?'active':'' ?>'>
+      <a style="text-decoration: none;" href="javascript:void(0);"><?php echo $v['name'] ?></a>
     </li>
     <?php } ?>
   </div>
@@ -71,24 +73,24 @@
     <!--</a>-->
   <!--</section>-->
   <?php foreach($news as $k => $v) {?>
-  <section class="item">
-    <a href="<?php echo $v['url'] ?>" class="map1">
-      <div class="item-left">
-        <div class="item-text">
-          <?php echo $v['title'] ?>
+    <section class="item">
+      <a href="<?php echo $v['url'] ?>" class="map1">
+        <div class="item-left">
+          <div class="item-text">
+            <?php echo $v['title'] ?>
+          </div>
+          <div class="item-info">
+            <!--<span class="info-address">深圳卫视</span>-->
+            <span>评论</span>
+            <span class="info-num"><?php echo $v['view'] ?></span>
+            <span class="info-time"><?php echo $v['create_time'] ?></span>
+          </div>
         </div>
-        <div class="item-info">
-          <!--<span class="info-address">深圳卫视</span>-->
-          <span>评论</span>
-          <span class="info-num"><?php echo $v['view'] ?></span>
-          <span class="info-time"><?php echo $v['create_time'] ?></span>
+        <div class="item-right">
+          <img src="<?php echo $v['image'] ?>" alt="">
         </div>
-      </div>
-      <div class="item-right">
-        <img src="<?php echo $v['image'] ?>" alt="">
-      </div>
-    </a>
-  </section>
+      </a>
+    </section>
   <?php } ?>
 </div>
 
@@ -108,33 +110,66 @@
 
 
 <script>
+  var page = 1;
+  $(function () {
+      //页面加载
+      $('.loading').click(function(){
+          $.ajax({
+              url:'/index.php?c=page&m=indexlist&cid=<?php echo $cid?>',
+              data:{
+                  page: page + 1
+              },
+              success:function(data){
+                  page = page + 1;
+                  data = JSON.parse(data);
+                  if(data.length){
+                      data.forEach(v=>{
+                          $(`<section class="item">
+                                <a href="${v.url}" class="map1">
+                                <div class="item-left">
+                                <div class="item-text">
+                                  ${v.title}
+                                </div>
+                                <div class="item-info">
+                                  <span>评论</span>
+                                  <span class="info-num">${v.view}</span>
+                                  <span class="info-time">${v.create_time}</span>
+                                </div>
+                                </div>
+                                <div class="item-right">
+                                  <img src="${v.image}" alt="">
+                                </div>
+                                </a>
+                              </section>`)
+                        .appendTo('.content');
+                      })
+                  }else{
+                      $('.loading').remove();
+                      alert('饶过宝宝吧！')
+                  }
+              }
+          })
+      })
 
-  //     $('#pagination-demo').twbsPagination({
-  //         totalPages: <?php echo $page_total?>,
-  //     visiblePages: 3,
-  //         startPage:<?php echo $page?>,
-  //     onPageClick: function (event, page) {
-  //         console.log(page);
-  //         if(page != <?php echo $page?>){
-  //             location.href="/index.php?c=page&m=index&cid=<?php echo $cid?>&page="+page;
-  //         }
-  //     }
-  // });
+      //导航栏滚动
+      let box = document.querySelector('.nav-left');
+      $(box).on('click','li', function (e) {
+          let cid = $(this).attr('data-cid');
+          let a = Number( box.scrollLeft );
+          $.ajax({
+              url: `/index.php?c=page&m=index&cid=${cid}&page=1`,
+              data: {
+                  scrollLeft:a,
+              },
+              success: function () {
+                  location.href=`index.php?c=page&m=index&cid=${cid}&page=1`;
+                  console.log($scrollLeft)
+                  box.scrollTo($scrollLeft,0);
+              }
+          })
+      })
 
-        $('.loading').on('click',function () {
-
-            $.ajax({
-                url: '/index.php',
-                data: {
-                    c: 'page',
-                    m:'index',
-                    page: 2,
-                },
-                success: function () {
-                    location.href="http://www.abc.com/index.php?c=page&m=index&cid=1&page=2";
-                }
-            })
-        })
+  })
 
 </script>
 </body>
